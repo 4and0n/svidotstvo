@@ -1,22 +1,187 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор Свідоцтв — Ансамбль Веселка</title>
+    
+    <!-- Підключаємо оригінальні художні шрифти з Google Fonts -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Great+Vibes&family=IM+Fell+English:ital@0;1&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Підключаємо Tailwind CSS для правильної роботи інтерфейсу керування -->
+    <script src="https://tailwindcss.com"></script>
 
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Product Detail Screen (Copy)</title>
-      <meta name="description" content="Showcases detailed product views with interactive color and size options, highlighting discounts and features to enhance online shopping experience." />
-      <meta name="robots" content="noindex, nofollow" />
-      <style>html, body { height: 100%; margin: 0; } #root { height: 100%; }</style>
-      
-    </head>
+    <style>
+        /* ГЛОБАЛЬНІ СТИЛІ ТА ШРИФТИ */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a;
+        }
 
-    <body>
-      
-      <div id="root"></div>
-      <script type="module" src="/src/main.tsx"></script>
-      
-    </body>
-  </html>
-  
+        /* НАЛАШТУВАННЯ ДРУКУ ТА PDF ГЕНЕРАЦІЇ */
+        @media print {
+            body {
+                background: none !important;
+                background-color: #fdf8f0 !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            @page {
+                size: 297mm 210mm; /* Жорстко фіксуємо формат А4 альбомний */
+                margin: 0;
+            }
+            .a4-sheet {
+                width: 297mm !important;
+                height: 210mm !important;
+                page-break-after: always;
+                page-break-inside: avoid;
+                position: relative !important;
+                display: block !important;
+                box-shadow: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            .fold-crease {
+                display: none !important; /* Ховаємо лінію згину при друку */
+            }
+        }
+
+        /* НАЛАШТУВАННЯ ВІДОБРАЖЕННЯ НА ЕКРАНІ */
+        @media screen {
+            .a4-sheet {
+                width: 297mm;
+                height: 210mm;
+                position: relative;
+                background-color: #fdf8f0;
+                box-shadow: 0 12px 48px rgba(0,0,0,0.7);
+                margin: 0 auto;
+                overflow: hidden;
+            }
+            .sheet-container {
+                display: flex;
+                flex-direction: column;
+                gap: 40px;
+                align-items: center;
+                width: 100%;
+                padding: 20px;
+            }
+        }
+
+        /* Допоміжні класи для половинок */
+        .half-sheet {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+            overflow: hidden;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body class="text-gray-100 font-sans antialiased min-h-screen pb-12">
+
+    <!-- ── ПАНЕЛЬ КЕРУВАННЯ (Автоматично ховається при друку в PDF) ── -->
+    <div class="no-print max-w-4xl mx-auto mt-8 p-6 bg-gray-900 rounded-xl shadow-2xl border border-gray-800">
+        <h2 class="text-xl font-bold mb-4 text-amber-400 text-center font-serif tracking-wide">Панель автоматизації свідоцтв «ВЕСЕЛКА»</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
+            <div>
+                <label class="block text-sm font-medium text-gray-400 mb-2">Введіть ПІБ отримувача (зміниться всюди):</label>
+                <input type="text" id="nameInputField" value="Іванов Іван Іванович" 
+                       class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white font-serif text-lg focus:ring-2 focus:ring-amber-500 focus:outline-none transition-all">
+            </div>
+            
+            <div>
+                <button onclick="window.print()" 
+                        class="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-gray-950 font-bold py-3 px-6 rounded-lg transition-all shadow-lg shadow-amber-500/10 text-sm uppercase tracking-wider">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    Скачати готовий PDF (2 сторінки)
+                </button>
+            </div>
+        </div>
+        
+        <p class="mt-4 text-center text-xs text-gray-500">
+            💡 Обидва розвороти зафіксовані на екрані одночасно. Введіть ім'я людини, перевірте вигляд та тисніть кнопку завантаження.
+        </p>
+    </div>
+
+    <!-- ── ОБЛАСТЬ СВІДОЦТВ (ДЛЯ ЕКРАНУ ТА PDF) ── -->
+    <div class="sheet-container mt-8">
+
+        <!-- ========================================== -->
+        <!-- ═══ АРКУШ 1 · ЗОВНІШНІЙ РОЗВОРОТ ═══ -->
+        <!-- ========================================== -->
+        <div class="a4-sheet">
+            <!-- Лінія згину по центру -->
+            <div class="fold-crease" style="position:absolute; top:0; bottom:0; left:50%; width:1px; background:linear-gradient(to bottom,transparent,rgba(0,0,0,0.15) 20%,rgba(0,0,0,0.2) 50%,rgba(0,0,0,0.15) 80%,transparent); zIndex:20; transform:translateX(-50%);"></div>
+            
+            <!-- ЛІВА ПОЛОВИНА — Задня обкладинка (Порожня) -->
+            <div class="half-sheet" style="left:0; background-color:#fdf8f0;"></div>
+            
+            <!-- ПРАВА ПОЛОВИНА — Лицьова обкладинка -->
+            <div class="half-sheet" style="left:50%; display:flex; align-items:center; justify-content:center;">
+                <!-- Векторний орнамент красивої рамки ШІ -->
+                <div style="position:absolute; inset:0; pointer-events:none; padding:12px; box-sizing:border-box;" id="ornament-outer"></div>
+                
+                <div style="position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:12px; padding:0 10%; width:100%; text-align:center;">
+                    <!-- Декоративні лінії ШІ -->
+                    <svg width="70px" viewBox="0 0 120 32" style="opacity:0.85">
+                        <line x1="0" y1="16" x2="42" y2="16" stroke="#C8A84B" stroke-width="1.5"/>
+                        <polygon points="48,6 54,16 48,26 42,16" fill="none" stroke="#C8A84B" stroke-width="1.2"/>
+                        <polygon points="60,9 66,16 60,23 54,16" fill="#C8A84B"/>
+                        <polygon points="72,6 78,16 72,26 66,16" fill="none" stroke="#C8A84B" stroke-width="1.2"/>
+                        <line x1="78" y1="16" x2="120" y2="16" stroke="#C8A84B" stroke-width="1.5"/>
+                    </svg>
+                    
+                    <p style="font-size:10px; color:#1a2a4a; letter-spacing:0.15em; text-transform:uppercase; margin:0; font-family:'IM Fell English',Georgia,serif; opacity:0.68; line-height:1.55;">
+                        Національна Хореографічна спілка України
+                    </p>
+                    
+                    <h1 style="font-family:'Great Vibes',cursive; font-size:54px; color:#1a2a4a; margin:0; line-height:1.1; text-shadow:1px 1px 0 rgba(200,168,75,0.25);">
+                        Свідоцтво
+                    </h1>
+                    
+                    <svg width="65px" viewBox="0 0 110 12" style="opacity:0.7">
+                        <line x1="0" y1="6" x2="44" y2="6" stroke="#C8A84B" stroke-width="1"/>
+                        <circle cx="55" cy="6" r="4" fill="#C8A84B"/>
+                        <line x1="66" y1="6" x2="110" y2="6" stroke="#C8A84B" stroke-width="1"/>
+                    </svg>
+                    
+                    <p style="font-size:8px; color:#1a2a4a; letter-spacing:0.2em; text-transform:uppercase; margin:0; opacity:0.5; font-family:sans-serif;">
+                        про проходження повного курсу навчання
+                    </p>
+                    
+                    <svg width="60px" viewBox="0 0 100 22" style="opacity:0.75">
+                        <ellipse cx="10" cy="11" rx="5.5" ry="2.8" fill="#C8A84B" opacity="0.72"/>
+                        <ellipse cx="30" cy="11" rx="5.5" ry="2.8" fill="#C8A84B" opacity="0.68"/>
+                        <ellipse cx="50" cy="11" rx="5.5" ry="2.8" fill="#C8A84B" opacity="0.64"/>
+                        <ellipse cx="70" cy="11" rx="5.5" ry="2.8" fill="#C8A84B" opacity="0.60"/>
+                        <ellipse cx="90" cy="11" rx="5.5" ry="2.8" fill="#C8A84B" opacity="0.56"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- ═══ АРКУШ 2 · ВНУТРІШНІЙ РОЗВОРОТ ═══ -->
+        <!-- ========================================== -->
+        <div class="a4-sheet">
+            <!-- Лінія згину по центру -->
+            <div class="fold-crease" style="position:absolute; top:0; bottom:0; left:50%; width:1px; background:linear-gradient(to bottom,transparent,rgba(0,0,0,0.15) 20%,rgba(0,0,0,0.2) 50%,rgba(0,0,0,0.15) 80%,transparent); zIndex:20; transform:translateX(-50%);"></div>
+            
+            <!-- ЛІВА ПОЛОВИНА — Фотографія танцюристів -->
+            <div class="half-sheet" style="left:0; display:flex; align-items:center; justify-content:center;">
+                <div style="position:absolute; inset:0; pointer-events:none; padding:12px; box-sizing:border-box;" id="ornament-inner-left"></div>
+                
+                <div style="position:relative; z-index:2; width:54%; padding-top:76%; background-color:#fdf8f0; flex-shrink:0;">
+                    <!-- Заглушка для фото високої якості ансамблю Веселка -->
