@@ -25,17 +25,18 @@
             background-image: url('pattern_vertical.jpg'); background-size: 26px auto; background-repeat: repeat-y; z-index: 10;
             mix-blend-mode: multiply;
         }
-        /* ГОРИЗОНТАЛЬНІ рамки вкорочуємо на товщину бокових смужок (відступаємо по 38px зліва і справа), щоб вони не накладалися */
-        .v-top {
-            position: absolute; top: 12px; left: 38px; right: 38px; height: 26px;
-            background-image: url('pattern.jpg'); background-size: auto 26px; background-repeat: repeat-x; z-index: 5;
-            mix-blend-mode: multiply;
-        }
-        .v-bottom {
-            position: absolute; bottom: 12px; left: 38px; right: 38px; height: 26px;
-            background-image: url('pattern.jpg'); background-size: auto 26px; background-repeat: repeat-x; z-index: 5;
-            mix-blend-mode: multiply;
-        }
+/* ГОРИЗОНТАЛЬНІ рамки тепер підходять впритул до внутрішньої лінії бічних смужок */
+.v-top {
+    position: absolute; top: 12px; left: 26px; right: 26px; height: 26px;
+    background-image: url('pattern.jpg'); background-size: auto 26px; background-repeat: repeat-x; z-index: 5;
+    mix-blend-mode: multiply;
+}
+.v-bottom {
+    position: absolute; bottom: 12px; left: 26px; right: 26px; height: 26px;
+    background-image: url('pattern.jpg'); background-size: auto 26px; background-repeat: repeat-x; z-index: 5;
+    mix-blend-mode: multiply;
+}
+
 
         @media print {
             body { background: none !important; background-color: #fdf8f0 !important; }
