@@ -11,14 +11,21 @@
     <style>
         body { margin: 0; padding: 0; background-color: #1a1a1a; font-family: 'Lora', Georgia, serif; }
         
-        /* Контейнер рамки */
         .vyshyvanka-container {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            box-sizing: border-box;
+            position: absolute; inset: 0; pointer-events: none; box-sizing: border-box;
         }
-        /* Смужки рамки повертаємо на повну довжину без дірок */
+        /* ВЕРТИКАЛЬНІ рамки йдуть на передньому плані (z-index: 10) і рівно відсікають краї горизонтальних */
+        .v-left {
+            position: absolute; top: 12px; bottom: 12px; left: 12px; width: 26px;
+            background-image: url('pattern_vertical.jpg'); background-size: 26px auto; background-repeat: repeat-y; z-index: 10;
+            mix-blend-mode: multiply;
+        }
+        .v-right {
+            position: absolute; top: 12px; bottom: 12px; right: 12px; width: 26px;
+            background-image: url('pattern_vertical.jpg'); background-size: 26px auto; background-repeat: repeat-y; z-index: 10;
+            mix-blend-mode: multiply;
+        }
+        /* ГОРИЗОНТАЛЬНІ рамки йдуть по задньому плану (z-index: 5) від краю до краю */
         .v-top {
             position: absolute; top: 12px; left: 12px; right: 12px; height: 26px;
             background-image: url('pattern.jpg'); background-size: auto 26px; background-repeat: repeat-x; z-index: 5;
@@ -29,28 +36,6 @@
             background-image: url('pattern.jpg'); background-size: auto 26px; background-repeat: repeat-x; z-index: 5;
             mix-blend-mode: multiply;
         }
-        .v-left {
-            position: absolute; top: 12px; bottom: 12px; left: 12px; width: 26px;
-            background-image: url('pattern_vertical.jpg'); background-size: 26px auto; background-repeat: repeat-y; z-index: 5;
-            mix-blend-mode: multiply;
-        }
-        .v-right {
-            position: absolute; top: 12px; bottom: 12px; right: 12px; width: 26px;
-            background-image: url('pattern_vertical.jpg'); background-size: 26px auto; background-repeat: repeat-y; z-index: 5;
-            mix-blend-mode: multiply;
-        }
-        
-        /* Створюємо акуратні маскуючі куточки під колір паперу поверх стиків */
-        .vyshyvanka-container::before {
-            content: ""; position: absolute; z-index: 20;
-            top: 12px; left: 12px; width: 26px; height: 26px;
-            background-color: #fdf8f0;
-            box-shadow: 
-                450px 0 0 #fdf8f0, /* Верхній правий */
-                0 657px 0 #fdf8f0, /* Нижній лівий */
-                450px 657px 0 #fdf8f0; /* Нижній правий */
-        }
-
 
         @media print {
             body { background: none !important; background-color: #fdf8f0 !important; }
@@ -77,7 +62,7 @@
 <body class="text-gray-100 antialiased min-h-screen pb-12">
     <!-- ── ПАНЕЛЬ КЕРУВАННЯ ── -->
     <div class="no-print max-w-4xl mx-auto mt-6 p-5 bg-gray-900 rounded-xl border border-gray-800 shadow-2xl">
-        <h2 class="text-lg font-bold mb-4 text-amber-400 font-sans tracking-wide text-center">Генератор Свідоцтв «ВЕСЕЛКА» (Стикування встик)</h2>
+        <h2 class="text-lg font-bold mb-4 text-amber-400 font-sans tracking-wide text-center">Генератор Свідоцтв «ВЕСЕЛКА» (Монолітна Версія)</h2>
         <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
             <div class="w-full md:w-1/2">
                 <label class="block text-xs font-medium text-gray-400 mb-1">Введіть ПІБ отримувача:</label>
@@ -121,7 +106,7 @@
         <div id="sheetInner" class="a4-sheet screen-hidden print-visible">
             <div class="fold-crease" style="position:absolute; top:0; bottom:0; left:50%; width:1px; background:linear-gradient(to bottom,transparent,rgba(0,0,0,0.1) 40%,rgba(0,0,0,0.1) 60%,transparent); z-index:20; transform:translateX(-50%);"></div>
             
-            <!-- ЛІВА СТОРОНА — Фото з новими рамками встик -->
+            <!-- ЛІВА СТОРОНА — Фото 82% (dance.png) -->
             <div class="half-sheet" style="left:0; display:flex; align-items:center; justify-content:center;">
                 <div class="vyshyvanka-container">
                     <div class="v-top"></div><div class="v-bottom"></div><div class="v-left"></div><div class="v-right"></div>
@@ -131,7 +116,7 @@
                 </div>
             </div>
             
-            <!-- ПРАВА СТОРОНА — Тексти великого масштабу з новими рамками встик -->
+            <!-- ПРАВА СТОРОНА — Тексти великого солідного масштабу -->
             <div class="half-sheet" style="left:50%; display:flex; align-items:center; justify-content:center;">
                 <div class="vyshyvanka-container">
                     <div class="v-top"></div><div class="v-bottom"></div><div class="v-left"></div><div class="v-right"></div>
