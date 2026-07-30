@@ -18,25 +18,25 @@
             pointer-events: none;
             box-sizing: border-box;
         }
-        /* БОКОВІ рамки — тепер чітко обрізаються по синій лінії (відступають по 20px зверху і знизу) */
+        /* БОКОВІ рамки — ідеально вирівняні по вертикалі (відступ 12px) */
         .v-left {
-            position: absolute; top: 20px; bottom: 20px; left: 12px; width: 26px;
+            position: absolute; top: 12px; bottom: 12px; left: 12px; width: 26px;
             background-image: url('pattern_vertical.jpg'); background-size: 26px auto; background-repeat: repeat-y; z-index: 10;
             mix-blend-mode: multiply;
         }
         .v-right {
-            position: absolute; top: 20px; bottom: 20px; right: 12px; width: 26px;
+            position: absolute; top: 12px; bottom: 12px; right: 12px; width: 26px;
             background-image: url('pattern_vertical.jpg'); background-size: 26px auto; background-repeat: repeat-y; z-index: 10;
             mix-blend-mode: multiply;
         }
-        /* ВЕРХНЯ ТА НИЖНЯ рамки — тепер чітко підходять по зеленій лінії (відступають по 30px зліва і справа) */
+        /* ВЕРХНЯ ТА НИЖНЯ рамки — підкориговані до 35px, щоб прибрати мікро-нахлест хрестиків */
         .v-top {
-            position: absolute; top: 12px; left: 30px; right: 30px; height: 26px;
+            position: absolute; top: 12px; left: 35px; right: 35px; height: 26px;
             background-image: url('pattern.jpg'); background-size: auto 26px; background-repeat: repeat-x; z-index: 5;
             mix-blend-mode: multiply;
         }
         .v-bottom {
-            position: absolute; bottom: 12px; left: 30px; right: 30px; height: 26px;
+            position: absolute; bottom: 12px; left: 35px; right: 35px; height: 26px;
             background-image: url('pattern.jpg'); background-size: auto 26px; background-repeat: repeat-x; z-index: 5;
             mix-blend-mode: multiply;
         }
