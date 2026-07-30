@@ -11,31 +11,35 @@
     <style>
         body { margin: 0; padding: 0; background-color: #1a1a1a; font-family: 'Lora', Georgia, serif; }
         
+        /* Контейнер рамки */
         .vyshyvanka-container {
-            position: absolute; inset: 0; pointer-events: none; box-sizing: border-box;
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            box-sizing: border-box;
         }
-        /* ВЕРТИКАЛЬНІ рамки робимо на всю висоту (від 12px до самого низу), вони утворюють кути */
+        /* БОКОВІ рамки — тепер чітко обрізаються по синій лінії (відступають по 20px зверху і знизу) */
         .v-left {
-            position: absolute; top: 12px; bottom: 12px; left: 12px; width: 26px;
+            position: absolute; top: 20px; bottom: 20px; left: 12px; width: 26px;
             background-image: url('pattern_vertical.jpg'); background-size: 26px auto; background-repeat: repeat-y; z-index: 10;
             mix-blend-mode: multiply;
         }
         .v-right {
-            position: absolute; top: 12px; bottom: 12px; right: 12px; width: 26px;
+            position: absolute; top: 20px; bottom: 20px; right: 12px; width: 26px;
             background-image: url('pattern_vertical.jpg'); background-size: 26px auto; background-repeat: repeat-y; z-index: 10;
             mix-blend-mode: multiply;
         }
-/* ГОРИЗОНТАЛЬНІ рамки тепер підходять впритул до внутрішньої лінії бічних смужок */
-.v-top {
-    position: absolute; top: 12px; left: 26px; right: 26px; height: 26px;
-    background-image: url('pattern.jpg'); background-size: auto 26px; background-repeat: repeat-x; z-index: 5;
-    mix-blend-mode: multiply;
-}
-.v-bottom {
-    position: absolute; bottom: 12px; left: 26px; right: 26px; height: 26px;
-    background-image: url('pattern.jpg'); background-size: auto 26px; background-repeat: repeat-x; z-index: 5;
-    mix-blend-mode: multiply;
-}
+        /* ВЕРХНЯ ТА НИЖНЯ рамки — тепер чітко підходять по зеленій лінії (відступають по 30px зліва і справа) */
+        .v-top {
+            position: absolute; top: 12px; left: 30px; right: 30px; height: 26px;
+            background-image: url('pattern.jpg'); background-size: auto 26px; background-repeat: repeat-x; z-index: 5;
+            mix-blend-mode: multiply;
+        }
+        .v-bottom {
+            position: absolute; bottom: 12px; left: 30px; right: 30px; height: 26px;
+            background-image: url('pattern.jpg'); background-size: auto 26px; background-repeat: repeat-x; z-index: 5;
+            mix-blend-mode: multiply;
+        }
 
 
         @media print {
