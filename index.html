@@ -6,10 +6,11 @@
     <title>Генератор Свідоцтв — Ансамбль Веселка</title>
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Great+Vibes&family=IM+Fell+English:ital@0;1&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://googleapis.com/css2?family=Great+Vibes&family=Lora:ital,wght@0,500;0,700;1,600&display=swap" rel="stylesheet">
     <script src="https://tailwindcss.com"></script>
     <style>
         body { margin: 0; padding: 0; background-color: #1a1a1a; font-family: 'Lora', Georgia, serif; }
+        
         @media print {
             body { background: none !important; background-color: #fdf8f0 !important; }
             .no-print { display: none !important; }
@@ -23,121 +24,141 @@
             .fold-crease { display: none !important; }
             .print-visible { display: block !important; }
         }
+
         @media screen {
             .a4-sheet { width: 297mm; height: 210mm; position: relative; background-color: #fdf8f0; box-shadow: 0 12px 48px rgba(0,0,0,0.7); overflow: hidden; }
             .screen-hidden { display: none !important; }
         }
+
         .half-sheet { position: absolute; top: 0; bottom: 0; width: 50%; overflow: hidden; box-sizing: border-box; margin: 0; padding: 0; }
     </style>
 </head>
 <body class="text-gray-100 antialiased min-h-screen pb-12">
+    <!-- ── ПАНЕЛЬ КЕРУВАННЯ ── -->
     <div class="no-print max-w-4xl mx-auto mt-6 p-5 bg-gray-900 rounded-xl border border-gray-800 shadow-2xl">
-        <h2 class="text-lg font-bold mb-4 text-amber-400 font-sans tracking-wide text-center">Панель автоматизації свідоцтв «ВЕСЕЛКА»</h2>
+        <h2 class="text-lg font-bold mb-4 text-amber-400 font-sans tracking-wide text-center">Оновлена Панель Свідоцтв «ВЕСЕЛКА» (Закарпатський стиль)</h2>
         <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
             <div class="w-full md:w-1/2">
                 <label class="block text-xs font-medium text-gray-400 mb-1">Введіть ПІБ отримувача:</label>
                 <input type="text" id="nameInputField" value="Іванову Івану Івановичу" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white font-serif text-base focus:ring-2 focus:ring-amber-500 focus:outline-none transition-all">
             </div>
             <div class="flex bg-black p-1 rounded-lg border border-gray-800">
-                <button id="btnOuter" onclick="switchTab('outer')" class="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-md transition-all bg-amber-500 text-gray-950">Аркуш 1 · Зовнішній</button>
-                <button id="btnInner" onclick="switchTab('inner')" class="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-md transition-all text-gray-400 hover:text-white">Аркуш 2 · Внутрішній</button>
+                <button id="btnOuter" onclick="switchTab('outer')" class="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-md transition-all bg-amber-500 text-gray-950">Обкладинка</button>
+                <button id="btnInner" onclick="switchTab('inner')" class="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-md transition-all text-gray-400 hover:text-white">Внутрішня частина</button>
             </div>
-            <button onclick="window.print()" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-gray-950 font-bold py-3 px-6 rounded-lg font-sans text-xs uppercase tracking-wider shadow-lg">Скачати готовий PDF</button>
+            <button onclick="window.print()" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-gray-950 font-bold py-3 px-6 rounded-lg font-sans text-xs uppercase tracking-wider shadow-lg">Скачати PDF</button>
         </div>
     </div>
+
+    <!-- ── ОБЛАСТЬ МАКЕТА СВІДОЦТВА ── -->
     <div class="flex flex-col gap-8 items-center mt-6">
+
+        <!-- ═══ АРКУШ 1 · ЗОВНІШНІЙ РОЗВОРОТ ═══ -->
         <div id="sheetOuter" class="a4-sheet">
-            <div class="fold-crease" style="position:absolute; top:0; bottom:0; left:50%; width:1px; background:linear-gradient(to bottom,transparent,rgba(0,0,0,0.15) 20%,rgba(0,0,0,0.2) 50%,rgba(0,0,0,0.15) 80%,transparent); z-index:20; transform:translateX(-50%);"></div>
+            <div class="fold-crease" style="position:absolute; top:0; bottom:0; left:50%; width:1px; background:linear-gradient(to bottom,transparent,rgba(0,0,0,0.1) 40%,rgba(0,0,0,0.1) 60%,transparent); z-index:20; transform:translateX(-50%);"></div>
             <div class="half-sheet" style="left:0; background-color:#fdf8f0;"></div>
             <div class="half-sheet" style="left:50%; display:flex; align-items:center; justify-content:center;">
-                <div style="position:absolute; inset:0;" class="ai-ornamental-frame"></div>
-                <div style="position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:14px; padding:0 10%; width:100%; text-align:center;">
-                    <svg width="75px" viewBox="0 0 120 32"><line x1="0" y1="16" x2="42" y2="16" stroke="#C8A84B" stroke-width="1.5"/><polygon points="48,6 54,16 48,26 42,16" fill="none" stroke="#C8A84B" stroke-width="1.2"/><polygon points="60,9 66,16 60,23 54,16" fill="#C8A84B"/><polygon points="72,6 78,16 72,26 66,16" fill="none" stroke="#C8A84B" stroke-width="1.2"/><line x1="78" y1="16" x2="120" y2="16" stroke="#C8A84B" stroke-width="1.5"/></svg>
-                    <p style="font-size:8.5px; color:#1a2a4a; letter-spacing:0.15em; text-transform:uppercase; margin:0; font-family:'IM Fell English',Georgia,serif; opacity:0.75;">Національна Хореографічна спілка України</p>
-                    <h1 style="font-family:'Great Vibes',cursive; font-size:52px; color:#1a2a4a; margin:0; line-height:1.1;">Свідоцтво</h1>
-                    <svg width="65px" viewBox="0 0 110 12" style="opacity:0.7"><line x1="0" y1="6" x2="44" y2="6" stroke="#C8A84B" stroke-width="1"/><circle cx="55" cy="6" r="3.5" fill="#C8A84B"/><line x1="66" y1="6" x2="110" y2="6" stroke="#C8A84B" stroke-width="1"/></svg>
-                    <p style="font-size:7px; color:#1a2a4a; letter-spacing:0.18em; text-transform:uppercase; margin:0; opacity:0.6; font-family:sans-serif;">про проходження повного курсу навчання</p>
+                
+                <!-- Нова закарпатська рамка-вишиванка -->
+                <div style="position:absolute; inset:0;" class="vyshyvanka-frame"></div>
+                
+                <div style="position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:20px; padding:0 12%; width:100%; text-align:center;">
+                    <p style="font-size:13px; color:#1a2a4a; font-weight:700; tracking:0.12em; text-transform:uppercase; margin:0; font-family:'Lora',serif;">
+                        Національна Хореографічна спілка України
+                    </p>
+                    <h1 style="font-family:'Great Vibes',cursive; font-size:68px; color:#1a2a4a; margin:10px 0; line-height:1.0;">
+                        Свідоцтво
+                    </h1>
+                    <p style="font-size:11px; color:#1a2a4a; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; margin:0; opacity:0.8;">
+                        про проходження повного курсу навчання
+                    </p>
                 </div>
             </div>
         </div>
+        <!-- ═══ АРКУШ 2 · ВНУТРІШНІЙ РОЗВОРОТ (Вміст) ═══ -->
         <div id="sheetInner" class="a4-sheet screen-hidden print-visible">
-            <div class="fold-crease" style="position:absolute; top:0; bottom:0; left:50%; width:1px; background:linear-gradient(to bottom,transparent,rgba(0,0,0,0.15) 20%,rgba(0,0,0,0.2) 50%,rgba(0,0,0,0.15) 80%,transparent); z-index:20; transform:translateX(-50%);"></div>
+            <div class="fold-crease" style="position:absolute; top:0; bottom:0; left:50%; width:1px; background:linear-gradient(to bottom,transparent,rgba(0,0,0,0.1) 40%,rgba(0,0,0,0.1) 60%,transparent); z-index:20; transform:translateX(-50%);"></div>
+            
+            <!-- ЛІВА СТОРОНА — Фото майже на всю сторінку (92%) -->
             <div class="half-sheet" style="left:0; display:flex; align-items:center; justify-content:center;">
-                <div style="position:absolute; inset:0;" class="ai-ornamental-frame thin-frame"></div>
-                <div style="position:relative; z-index:2; width:54%; padding-top:76%; flex-shrink:0;">
-                    
-                    <img src="dance.png" alt="Ансамбль Веселка" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:center; display:block;">
-                    
-                    <svg viewBox="0 0 300 420" style="position:absolute; inset:-10px; width:calc(100% + 20px); height:calc(100% + 20px); pointer-events:none; overflow:visible;">
-                        <rect x="4" y="4" width="292" height="412" fill="none" stroke="#C8A84B" stroke-width="2"/>
-                        <g transform="translate(4,4)"><line x1="0" y1="0" x2="18" y2="0" stroke="#C8A84B" stroke-width="2"/><line x1="0" y1="0" x2="0" y2="18" stroke="#C8A84B" stroke-width="2"/></g>
-                        <g transform="translate(296,4) rotate(90)"><line x1="0" y1="0" x2="18" y2="0" stroke="#C8A84B" stroke-width="2"/><line x1="0" y1="0" x2="0" y2="18" stroke="#C8A84B" stroke-width="2"/></g>
-                        <g transform="translate(4,416) rotate(270)"><line x1="0" y1="0" x2="18" y2="0" stroke="#C8A84B" stroke-width="2"/><line x1="0" y1="0" x2="0" y2="18" stroke="#C8A84B" stroke-width="2"/></g>
-                        <g transform="translate(296,416) rotate(180)"><line x1="0" y1="0" x2="18" y2="0" stroke="#C8A84B" stroke-width="2"/><line x1="0" y1="0" x2="0" y2="18" stroke="#C8A84B" stroke-width="2"/></g>
-                    </svg>
+                <div style="position:absolute; inset:0;" class="vyshyvanka-frame"></div>
+                <div style="position:relative; z-index:2; width:92%; height:92%; box-sizing:border-box; padding:6px; border:2px solid #C8A84B; background-color:#fff;">
+                    <img src="dance.jpg" alt="Ансамбль Веселка" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;">
                 </div>
             </div>
+            
+            <!-- ПРАВА СТОРОНА — Збільшений щільний текст -->
             <div class="half-sheet" style="left:50%; display:flex; align-items:center; justify-content:center;">
-                <div style="position:absolute; inset:0;" class="ai-ornamental-frame thin-frame"></div>
-                <div style="position:relative; z-index:2; width:78%; height:82%; display:flex; flex-direction:column; align-items:center; justify-content:space-between; text-align:center;">
-                    <div style="display:flex; flex-direction:column; align-items:center; gap:4px; margin-top: 10px;">
-                        <svg width="45px" viewBox="0 0 70 10"><line x1="0" y1="5" x2="27" y2="5" stroke="#C8A84B" stroke-width="0.8"/><circle cx="35" cy="5" r="2.5" fill="#C8A84B"/><line x1="43" y1="5" x2="70" y2="5" stroke="#C8A84B" stroke-width="0.8"/></svg>
-                        <p style="font-size:7px; color:#1a2a4a; line-height:1.6; margin:0; font-family:'IM Fell English',Georgia,serif; font-weight: bold; opacity:0.85;">Закарпатський обласний осередок<br/> Національної Хореографічної спілки України<br/> ГО «Школа хореографічного мистецтва ім. М. Суслікова»</p>
+                <div style="position:absolute; inset:0;" class="vyshyvanka-frame"></div>
+                
+                <div style="position:relative; z-index:2; width:84%; height:86%; display:flex; flex-direction:column; align-items:center; justify-content:space-between; text-align:center; padding: 10px 0;">
+                    
+                    <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
+                        <p style="font-size:12.5px; color:#1a2a4a; line-height:1.5; margin:0; font-family:'Lora',serif; font-weight:700;">
+                            Закарпатський обласний осередок<br/>
+                            Національної Хореографічної спілки України<br/>
+                            ГО «Школа хореографічного мистецтва ім. М. Суслікова»
+                        </p>
                     </div>
-                    <div style="display:flex; flex-direction:column; align-items:center; gap:4px; margin: 10px 0;">
-                        <p style="font-size:7px; color:#1a2a4a; letter-spacing:0.12em; text-transform:uppercase; margin:0; opacity:0.6; font-family:sans-serif;">видано</p>
-                        <h2 id="dynamicStudentName" style="font-family:'Great Vibes',cursive; font-size:28px; color:#1a2a4a; margin:4px 0; line-height:1.1;">Іванову Івану Івановичу</h2>
-                        <p style="font-size:7.5px; color:#1a2a4a; line-height:1.7; margin:0; font-family:'Lora',Georgia,serif; font-style:italic; opacity:0.9;">про проходження повного курсу навчання<br/> у Зразковому художньому колекві України<br/> ансамблі танцю</p>
-                        <p style="font-family:'Great Vibes',cursive; font-size:24px; color:#C8A84B; margin:2px 0;">«Веселка»</p>
+
+                    <div style="display:flex; flex-direction:column; align-items:center; gap:6px; width:100%;">
+                        <p style="font-size:12px; color:#c8a84b; letter-spacing:0.2em; text-transform:uppercase; margin:0; font-weight:700;">видано</p>
+                        <h2 id="dynamicStudentName" style="font-family:'Lora',serif; font-weight:700; font-size:32px; color:#1a2a4a; margin:8px 0; line-height:1.1; border-bottom:2px solid #C8A84B; padding-bottom:4px; width:90%;">
+                            Іванову Івану Івановичу
+                        </h2>
+                        <p style="font-size:13.5px; color:#1a2a4a; line-height:1.6; margin:0; font-family:'Lora',serif; font-style:italic; font-weight:500;">
+                            про проходження повного курсу навчання<br/>
+                            у Зразковому художньому колективі України<br/>
+                            ансамблі танцю
+                        </p>
+                        <p style="font-family:'Great Vibes',cursive; font-size:38px; color:#C8A84B; margin:5px 0; line-height:1.0;">
+                            «Веселка»
+                        </p>
                     </div>
-                    <div style="width:100%; display:flex; flex-direction:column; gap:8px; margin-bottom: 10px;">
-                        <svg width="100%" viewBox="0 0 300 12" style="opacity:0.6"><line x1="0" y1="6" x2="118" y2="6" stroke="#C8A84B" stroke-width="0.7"/><polygon points="150,3 156,6 150,9 144,6" fill="#C8A84B"/><line x1="182" y1="6" x2="300" y2="6" stroke="#C8A84B" stroke-width="0.7"/></svg>
-                        <div style="display:flex; justify-content:space-between; font-size:6.5px; color:#1a2a4a; font-family:'Lora',Georgia,serif; padding: 0 4px;">
+
+                    <div style="width:100%; display:flex; flex-direction:column; gap:14px;">
+                        <div style="display:flex; justify-content:space-between; font-size:12px; color:#1a2a4a; font-family:'Lora',serif; font-weight:700; padding: 0 10px;">
                             <span>м. Ужгород</span>
-                            <span>Дата <span style="display:inline-block; width:45px; border-bottom:1px solid rgba(26,42,74,0.5);"></span></span>
-                            <span>Реєстр. № <span style="display:inline-block; width:35px; border-bottom:1px solid rgba(26,42,74,0.5);"></span></span>
+                            <span>Дата: <span style="display:inline-block; width:70px; border-bottom:1px solid #1a2a4a;"></span></span>
+                            <span>Реєстр. №: <span style="display:inline-block; width:50px; border-bottom:1px solid #1a2a4a;"></span></span>
                         </div>
-                        <div style="display:flex; flex-direction:column; align-items:center; gap:2px; margin-top:6px;">
-                            <span style="display:block; width:65%; border-bottom:1px solid rgba(26,42,74,0.35);"></span>
-                            <span style="font-size:5.5px; color:#1a2a4a; opacity:0.7; font-family:'Lora',Georgia,serif;">Голова ГО / Керівник ансамблю</span>
+                        
+                        <div style="display:flex; flex-direction:column; align-items:center; gap:4px; margin-top:5px;">
+                            <span style="display:block; width:75%; border-bottom:1px solid rgba(26,42,74,0.4); mb:2px;"></span>
+                            <span style="font-size:11px; color:#1a2a4a; font-weight:700; font-family:'Lora',serif;">
+                                Голова ГО / Керівник ансамблю
+                            </span>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
+
     </div>
+
     <script>
-        function generateAIFrame(thin = false) {
-            const sw = thin ? 1.0 : 1.6; const fs = thin ? 15 : 19;
-            let hDiamonds = '';
-            for(let i=0; i<10; i++) {
-                let x = 62 + i*40;
-                hDiamonds += `<polygon points="${x},${34-6} ${x+3.6},34 ${x},${34+6} ${x-3.6},34" fill="none" stroke="#C8A84B" stroke-width="${sw*0.75}"/>`;
-                hDiamonds += `<polygon points="${x},${673-6} ${x+3.6},673 ${x},${673+6} ${x-3.6},673" fill="none" stroke="#C8A84B" stroke-width="${sw*0.75}"/>`;
-                if(i < 9) {
-                    hDiamonds += `<line x1="${x+10}" y1="34" x2="${x+30}" y2="34" stroke="#C8A84B" stroke-width="${sw*0.5}"/><circle cx="${x+20}" cy="34" r="1.2" fill="#C8A84B"/>`;
-                    hDiamonds += `<line x1="${x+10}" y1="673" x2="${x+30}" y2="673" stroke="#C8A84B" stroke-width="${sw*0.5}"/><circle cx="${x+20}" cy="673" r="1.2" fill="#C8A84B"/>`;
-                }
-            }
-            let vDiamonds = '';
-            for(let i=0; i<14; i++) {
-                let y = 62 + i*44;
-                vDiamonds += `<polygon points="34,${y-6} ${34+3.6},${y} 34,${y+6} ${34-3.6},${y}" fill="none" stroke="#C8A84B" stroke-width="${sw*0.75}"/>`;
-                vDiamonds += `<polygon points="466,${y-6} ${466+3.6},${y} 466,${y+6} ${466-3.6},${y}" fill="none" stroke="#C8A84B" stroke-width="${sw*0.75}"/>`;
-                if(i < 13) {
-                    vDiamonds += `<line x1="34" y1="${y+10}" x2="34" y2="${y+34}" stroke="#C8A84B" stroke-width="${sw*0.5}"/><circle cx="34" cy="${y+22}" r="1.2" fill="#C8A84B"/>`;
-                    vDiamonds += `<line x1="466" y1="${y+10}" x2="466" y2="${y+34}" stroke="#C8A84B" stroke-width="${sw*0.5}"/><circle cx="466" cy="${y+22}" r="1.2" fill="#C8A84B"/>`;
-                }
-            }
-            const flower = `<circle cx="0" cy="0" r="${fs*0.22}" fill="#1a2a4a"/><circle cx="0" cy="0" r="${fs*0.12}" fill="#C8A84B"/><ellipse cx="0" cy="${-fs*0.55}" rx="${fs*0.17}" ry="${fs*0.31}" fill="#C8A84B" opacity="0.88"/><ellipse cx="0" cy="${fs*0.55}" rx="${fs*0.17}" ry="${fs*0.31}" fill="#C8A84B" opacity="0.88"/><ellipse cx="${-fs*0.55}" cy="0" rx="${fs*0.31}" ry="${fs*0.17}" fill="#C8A84B" opacity="0.88"/><ellipse cx="${fs*0.55}" cy="0" rx="${fs*0.31}" ry="${fs*0.17}" fill="#C8A84B" opacity="0.88"/>`;
-            
-            /* Тут повністю виправлено адресу простору імен на офіційну від W3C */
-            return `<svg viewBox="0 0 500 707" xmlns="http://w3.org" preserveAspectRatio="none" style="width:100%; height:100%; display:block; position:absolute; inset:0; pointer-events:none;"><rect x="7" y="7" width="486" height="693" fill="none" stroke="#1a2a4a" stroke-width="${sw*2.0}"/><rect x="14" y="14" width="472" height="679" fill="none" stroke="#C8A84B" stroke-width="${sw*0.65}"/><rect x="21" y="21" width="458" height="665" fill="none" stroke="#1a2a4a" stroke-width="${sw*0.38}"/>${hDiamonds} ${vDiamonds}<g transform="translate(36,36)">${flower}</g><g transform="translate(464,36)">${flower}</g><g transform="translate(36,671)">${flower}</g><g transform="translate(464,671)">${flower}</g><polygon points="250,7 259,17 250,27 241,17" fill="#C8A84B" opacity="0.85"/><polygon points="250,680 259,690 250,700 241,690" fill="#C8A84B" opacity="0.85"/></svg>`;
+        /* Скрипт малювання автентичного українського орнаменту хрестиком та закарпатських гір */
+        function drawUkrainianPattern() {
+            return `<svg viewBox="0 0 500 707" xmlns="http://w3.org" preserveAspectRatio="none" style="width:100%; height:100%; display:block; position:absolute; inset:0; pointer-events:none;">
+                <!-- Основні рамки кольору Navy та Gold -->
+                <rect x="10" y="10" width="480" height="687" fill="none" stroke="#1a2a4a" stroke-width="2.5"/>
+                <rect x="16" y="16" width="468" height="675" fill="none" stroke="#C8A84B" stroke-width="1"/>
+                <rect x="26" y="26" width="448" height="655" fill="none" stroke="#e63946" stroke-width="1.5" stroke-dasharray="4,4"/>
+                
+                <!-- Геометричні закарпатські гори у кутах -->
+                <polygon points="10,45 35,25 45,45 65,15 85,45" fill="none" stroke="#C8A84B" stroke-width="1.5"/>
+                <polygon points="490,45 465,25 455,45 435,15 415,45" fill="none" stroke="#C8A84B" stroke-width="1.5"/>
+                <polygon points="10,662 35,682 45,662 65,692 85,662" fill="none" stroke="#C8A84B" stroke-width="1.5"/>
+                <polygon points="490,662 465,682 455,662 435,692 415,662" fill="none" stroke="#C8A84B" stroke-width="1.5"/>
+                
+                <!-- Традиційні українські елементи вишивки по центру сторін -->
+                <path d="M 230 10 L 250 25 L 270 10 M 240 10 L 250 18 L 260 10" fill="none" stroke="#e63946" stroke-width="2"/>
+                <path d="M 230 697 L 250 682 L 270 697 M 240 697 L 250 689 L 260 697" fill="none" stroke="#e63946" stroke-width="2"/>
+            </svg>`;
         }
 
-        document.querySelectorAll('.ai-ornamental-frame').forEach(el => {
-            const isThin = el.classList.contains('thin-frame'); el.innerHTML = generateAIFrame(isThin);
-        });
+        document.querySelectorAll('.vyshyvanka-frame').forEach(el => el.innerHTML = drawUkrainianPattern());
 
         function switchTab(tab) {
             const sheetOuter = document.getElementById('sheetOuter'); const sheetInner = document.getElementById('sheetInner');
