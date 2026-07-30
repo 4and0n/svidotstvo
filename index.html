@@ -11,31 +11,48 @@
     <style>
         body { margin: 0; padding: 0; background-color: #1a1a1a; font-family: 'Lora', Georgia, serif; }
         
+        /* Контейнер рамки */
         .vyshyvanka-container {
-            position: absolute; inset: 0; pointer-events: none; box-sizing: border-box;
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            box-sizing: border-box;
         }
-        /* ВЕРТИКАЛЬНІ рамки йдуть на передньому плані (z-index: 10) і рівно відсікають краї горизонтальних */
-        .v-left {
-            position: absolute; top: 12px; bottom: 12px; left: 12px; width: 26px;
-            background-image: url('pattern_vertical.jpg'); background-size: 26px auto; background-repeat: repeat-y; z-index: 10;
-            mix-blend-mode: multiply;
-        }
-        .v-right {
-            position: absolute; top: 12px; bottom: 12px; right: 12px; width: 26px;
-            background-image: url('pattern_vertical.jpg'); background-size: 26px auto; background-repeat: repeat-y; z-index: 10;
-            mix-blend-mode: multiply;
-        }
-        /* ГОРИЗОНТАЛЬНІ рамки йдуть по задньому плану (z-index: 5) від краю до краю */
+        /* ГОРИЗОНТАЛЬНІ рамки — чітко підходять до внутрішньої лінії (жовта область вашої схеми) */
         .v-top {
-            position: absolute; top: 12px; left: 12px; right: 12px; height: 26px;
+            position: absolute; top: 12px; left: 38px; right: 38px; height: 26px;
             background-image: url('pattern.jpg'); background-size: auto 26px; background-repeat: repeat-x; z-index: 5;
             mix-blend-mode: multiply;
         }
         .v-bottom {
-            position: absolute; bottom: 12px; left: 12px; right: 12px; height: 26px;
+            position: absolute; bottom: 12px; left: 38px; right: 38px; height: 26px;
             background-image: url('pattern.jpg'); background-size: auto 26px; background-repeat: repeat-x; z-index: 5;
             mix-blend-mode: multiply;
         }
+        /* ВЕРТИКАЛЬНІ рамки — чітко йдуть до внутрішньої лінії горизонтальних (синя область вашої схеми) */
+        .v-left {
+            position: absolute; top: 38px; bottom: 38px; left: 12px; width: 26px;
+            background-image: url('pattern_vertical.jpg'); background-size: 26px auto; background-repeat: repeat-y; z-index: 5;
+            mix-blend-mode: multiply;
+        }
+        .v-right {
+            position: absolute; top: 38px; bottom: 38px; right: 12px; width: 26px;
+            background-image: url('pattern_vertical.jpg'); background-size: 26px auto; background-repeat: repeat-y; z-index: 5;
+            mix-blend-mode: multiply;
+        }
+        
+        /* Чотири окремі геометричні заглушки, які закривають порожні кутові квадрати 26х26 пікселів */
+        .vyshyvanka-container::before {
+            content: ""; position: absolute; z-index: 20;
+            top: 12px; left: 12px; width: 26px; height: 26px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://w3.org" viewBox="0 0 20 20"><polygon points="10,2 18,10 10,18 2,10" fill="%23e63946"/><rect x="8" y="8" width="4" height="4" fill="%23111111"/></svg>');
+            background-size: 18px 18px; background-repeat: no-repeat; background-position: center;
+            box-shadow: 
+                450px 0 0 #fdf8f0, /* Верхній правий кут */
+                0 657px 0 #fdf8f0, /* Нижній лівий кут */
+                450px 657px 0 #fdf8f0; /* Нижній правий кут */
+        }
+
 
         @media print {
             body { background: none !important; background-color: #fdf8f0 !important; }
