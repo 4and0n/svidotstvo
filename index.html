@@ -11,35 +11,103 @@
     <style>
         body { margin: 0; padding: 0; background-color: #1a1a1a; font-family: 'Lora', Georgia, serif; }
         
-        /* Контейнер рамки */
-        .vyshyvanka-container {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            box-sizing: border-box;
-        }
-        /* ВЕРТИКАЛЬНІ рамки йдуть на повну висоту аркуша без обрізань */
-        .v-left {
-            position: absolute; top: 12px; bottom: 12px; left: 12px; width: 26px;
-            background-image: url('pattern_vertical.jpg'); background-size: 26px auto; background-repeat: repeat-y; z-index: 5;
-            mix-blend-mode: multiply;
-        }
-        .v-right {
-            position: absolute; top: 12px; bottom: 12px; right: 12px; width: 26px;
-            background-image: url('pattern_vertical.jpg'); background-size: 26px auto; background-repeat: repeat-y; z-index: 5;
-            mix-blend-mode: multiply;
-        }
-        /* ГОРИЗОНТАЛЬНІ рамки — тепер чітко ідеально підрізані під ширину бокових (рівно 38px) */
-        .v-top {
-            position: absolute; top: 12px; left: 38px; right: 38px; height: 26px;
-            background-image: url('pattern.jpg'); background-size: auto 26px; background-repeat: repeat-x; z-index: 5;
-            mix-blend-mode: multiply;
-        }
-        .v-bottom {
-            position: absolute; bottom: 12px; left: 38px; right: 38px; height: 26px;
-            background-image: url('pattern.jpg'); background-size: auto 26px; background-repeat: repeat-x; z-index: 5;
-            mix-blend-mode: multiply;
-        }
+/* ==========================================================
+   ВИШИВАНА РАМКА
+   ========================================================== */
+
+.vyshyvanka-container{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    box-sizing:border-box;
+}
+
+/* ---------------- ЛІВА ---------------- */
+
+.v-left{
+    position:absolute;
+
+    top:12px;
+    bottom:12px;
+    left:12px;
+
+    width:26px;
+
+    background-image:url("pattern_vertical.jpg");
+    background-repeat:repeat-y;
+    background-size:26px auto;
+    background-position:center top;
+
+    mix-blend-mode:multiply;
+    z-index:5;
+}
+
+/* ---------------- ПРАВА ---------------- */
+
+.v-right{
+    position:absolute;
+
+    top:12px;
+    bottom:12px;
+    right:12px;
+
+    width:26px;
+
+    background-image:url("pattern_vertical.jpg");
+    background-repeat:repeat-y;
+    background-size:26px auto;
+    background-position:center top;
+
+    mix-blend-mode:multiply;
+    z-index:5;
+}
+
+/* ---------------- ВЕРХ ---------------- */
+
+.v-top{
+    position:absolute;
+
+    top:12px;
+
+    /* невелике перекриття вертикальних рамок */
+    left:37px;
+    right:37px;
+
+    height:26px;
+
+    background-image:url("pattern.jpg");
+    background-repeat:repeat-x;
+    background-size:auto 26px;
+
+    /* важливо */
+    background-position:left top;
+
+    mix-blend-mode:multiply;
+
+    z-index:10;
+}
+
+/* ---------------- НИЗ ---------------- */
+
+.v-bottom{
+    position:absolute;
+
+    bottom:12px;
+
+    left:37px;
+    right:37px;
+
+    height:26px;
+
+    background-image:url("pattern.jpg");
+    background-repeat:repeat-x;
+    background-size:auto 26px;
+    background-position:left top;
+
+    mix-blend-mode:multiply;
+
+    z-index:10;
+}
 
         @media print {
             body { background: none !important; background-color: #fdf8f0 !important; }
