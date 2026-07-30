@@ -36,7 +36,7 @@
 <body class="text-gray-100 antialiased min-h-screen pb-12">
     <!-- ── ПАНЕЛЬ КЕРУВАННЯ ── -->
     <div class="no-print max-w-4xl mx-auto mt-6 p-5 bg-gray-900 rounded-xl border border-gray-800 shadow-2xl">
-        <h2 class="text-lg font-bold mb-4 text-amber-400 font-sans tracking-wide text-center">Оновлена Панель Свідоцтв «ВЕСЕЛКА» (Закарпатський стиль)</h2>
+        <h2 class="text-lg font-bold mb-4 text-amber-400 font-sans tracking-wide text-center">Оновлена Панель Свідоцтв «ВЕСЕЛКА» (Традиційна Вишиванка)</h2>
         <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
             <div class="w-full md:w-1/2">
                 <label class="block text-xs font-medium text-gray-400 mb-1">Введіть ПІБ отримувача:</label>
@@ -59,7 +59,7 @@
             <div class="half-sheet" style="left:0; background-color:#fdf8f0;"></div>
             <div class="half-sheet" style="left:50%; display:flex; align-items:center; justify-content:center;">
                 
-                <!-- Блок закарпатської вишиванки -->
+                <!-- Суцільний традиційний орнамент вишивки -->
                 <div style="position:absolute; inset:0;" class="vyshyvanka-frame"></div>
                 
                 <div style="position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:20px; padding:0 12%; width:100%; text-align:center;">
@@ -79,10 +79,10 @@
         <div id="sheetInner" class="a4-sheet screen-hidden print-visible">
             <div class="fold-crease" style="position:absolute; top:0; bottom:0; left:50%; width:1px; background:linear-gradient(to bottom,transparent,rgba(0,0,0,0.1) 40%,rgba(0,0,0,0.1) 60%,transparent); z-index:20; transform:translateX(-50%);"></div>
             
-            <!-- ЛІВА СТОРОНА — Фото 92% (Змінено на dance.png) -->
+            <!-- ЛІВА СТОРОНА — Фото повернуто у безпечні межі (84%) -->
             <div class="half-sheet" style="left:0; display:flex; align-items:center; justify-content:center;">
                 <div style="position:absolute; inset:0;" class="vyshyvanka-frame"></div>
-                <div style="position:relative; z-index:2; width:92%; height:92%; box-sizing:border-box; padding:6px; border:2px solid #C8A84B; background-color:#fff;">
+                <div style="position:relative; z-index:2; width:84%; height:84%; box-sizing:border-box; padding:6px; border:2px solid #C8A84B; background-color:#fff; shadow: 0 4px 12px rgba(0,0,0,0.05);">
                     <img src="dance.png" alt="Ансамбль Веселка" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;">
                 </div>
             </div>
@@ -138,69 +138,62 @@
     </div>
 
     <script>
-        /* Скрипт створення високоякісної векторної вишивки хрестиком та традиційних зірок Карпат */
-        function drawUkrainianVyshyvanka() {
-            let topPattern = '';
-            let bottomPattern = '';
-            let sidePatternLeft = '';
-            let sidePatternRight = '';
+        /* Новий скрипт генерації суцільного традиційного візерунка української геометрії хрестиком */
+        function drawSolidVyshyvanka() {
+            let topBorder = '';
+            let bottomBorder = '';
+            let leftBorder = '';
+            let rightBorder = '';
             
-            // Генеруємо геометричний орнамент хрестиком по горизонталі (червоно-чорні блоки)
-            for (let i = 40; i < 460; i += 16) {
-                topPattern += `
-                    <rect x="${i}" y="23" width="6" height="6" fill="#e63946"/>
-                    <rect x="${i+6}" y="23" width="4" height="6" fill="#111111"/>
-                    <rect x="${i+10}" y="25" width="6" height="2" fill="#e63946"/>
+            // Малюємо суцільну безперервну стрічку вишивки зверху та знизу (крок всього 8 пікселів для щільності)
+            for (let x = 16; x <= 484; x += 8) {
+                // Чергування автентичних червоних та чорних ниток-хрестиків
+                let color1 = (x % 16 === 0) ? '#e63946' : '#111111';
+                let color2 = (x % 16 === 0) ? '#111111' : '#e63946';
+                
+                topBorder += `
+                    <rect x="${x}" y="18" width="4" height="4" fill="${color1}"/>
+                    <rect x="${x+4}" y="22" width="4" height="4" fill="${color2}"/>
+                    <rect x="${x}" y="26" width="4" height="4" fill="${color1}"/>
                 `;
-                bottomPattern += `
-                    <rect x="${i}" y="678" width="6" height="6" fill="#e63946"/>
-                    <rect x="${i+6}" y="678" width="4" height="6" fill="#111111"/>
-                    <rect x="${i+10}" y="680" width="6" height="2" fill="#e63946"/>
-                `;
-            }
-
-            // Генеруємо орнамент по вертикалі
-            for (let i = 44; i < 660; i += 16) {
-                sidePatternLeft += `
-                    <rect x="23" y="${i}" width="6" height="6" fill="#e63946"/>
-                    <rect x="23" y="${i+6}" width="6" height="4" fill="#111111"/>
-                `;
-                sidePatternRight += `
-                    <rect x="471" y="${i}" width="6" height="6" fill="#e63946"/>
-                    <rect x="471" y="${i+6}" width="6" height="4" fill="#111111"/>
+                bottomBorder += `
+                    <rect x="${x}" y="677" width="4" height="4" fill="${color1}"/>
+                    <rect x="${x+4}" y="681" width="4" height="4" fill="${color2}"/>
+                    <rect x="${x}" y="685" width="4" height="4" fill="${color1}"/>
                 `;
             }
 
-            // Традиційна Карпатська Восьмикутна Зірка (Берегиня) для кутів
-            const starComponent = `
-                <g transform="scale(1.2)">
-                    <polygon points="0,-12 3,-3 12,0 3,3 0,12 -3,3 -12,0 -3,-3" fill="#e63946"/>
-                    <polygon points="-6,-6 6,-6 6,6 -6,6" fill="none" stroke="#111111" stroke-width="1.5" transform="rotate(45)"/>
-                    <circle cx="0" cy="0" r="2.5" fill="#C8A84B"/>
-                </g>
-            `;
+            // Малюємо суцільну безперервну стрічку вишивки по боках бланка
+            for (let y = 16; y <= 691; y += 8) {
+                let color1 = (y % 16 === 0) ? '#e63946' : '#111111';
+                let color2 = (y % 16 === 0) ? '#111111' : '#e63946';
+                
+                leftBorder += `
+                    <rect x="18" y="${y}" width="4" height="4" fill="${color1}"/>
+                    <rect x="22" y="${y+4}" width="4" height="4" fill="${color2}"/>
+                    <rect x="26" y="${y}" width="4" height="4" fill="${color1}"/>
+                `;
+                rightBorder += `
+                    <rect x="470" y="${y}" width="4" height="4" fill="${color1}"/>
+                    <rect x="474" y="${y+4}" width="4" height="4" fill="${color2}"/>
+                    <rect x="478" y="${y}" width="4" height="4" fill="${color1}"/>
+                `;
+            }
 
             return `<svg viewBox="0 0 500 707" xmlns="http://w3.org" preserveAspectRatio="none" style="width:100%; height:100%; display:block; position:absolute; inset:0; pointer-events:none;">
-                <!-- Загальні золоті та сині рамки-контури -->
-                <rect x="10" y="10" width="480" height="687" fill="none" stroke="#1a2a4a" stroke-width="2"/>
-                <rect x="14" y="14" width="472" height="679" fill="none" stroke="#C8A84B" stroke-width="1"/>
-                <rect x="34" y="34" width="432" height="639" fill="none" stroke="#C8A84B" stroke-width="0.75" stroke-dasharray="3,5"/>
+                <!-- Тонкі обмежувальні лінії для солідності -->
+                <rect x="12" y="12" width="476" height="683" fill="none" stroke="#1a2a4a" stroke-width="1.5"/>
+                <rect x="34" y="34" width="432" height="639" fill="none" stroke="#C8A84B" stroke-width="1"/>
                 
-                <!-- Рендеринг вишивки хрестиком -->
-                <g>${topPattern}</g>
-                <g>${bottomPattern}</g>
-                <g>${sidePatternLeft}</g>
-                <g>${sidePatternRight}</g>
-                
-                <!-- Вбудовуємо автентичні зірки в чотири кути бланка -->
-                <g transform="translate(26,26)">${starComponent}</g>
-                <g transform="translate(474,26)">${starComponent}</g>
-                <g transform="translate(26,681)">${starComponent}</g>
-                <g transform="translate(474,681)">${starComponent}</g>
+                <!-- Рендеринг суцільних вишитих стрічок -->
+                <g>${topBorder}</g>
+                <g>${bottomBorder}</g>
+                <g>${leftBorder}</g>
+                <g>${rightBorder}</g>
             </svg>`;
         }
 
-        document.querySelectorAll('.vyshyvanka-frame').forEach(el => el.innerHTML = drawUkrainianVyshyvanka());
+        document.querySelectorAll('.vyshyvanka-frame').forEach(el => el.innerHTML = drawSolidVyshyvanka());
 
         function switchTab(tab) {
             const sheetOuter = document.getElementById('sheetOuter'); const sheetInner = document.getElementById('sheetInner');
