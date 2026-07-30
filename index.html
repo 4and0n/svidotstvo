@@ -18,27 +18,37 @@
             pointer-events: none;
             box-sizing: border-box;
         }
-        /* БОКОВІ рамки — ідеально вирівняні по вертикалі (відступ 12px) */
-        .v-left {
-            position: absolute; top: 12px; bottom: 12px; left: 12px; width: 26px;
-            background-image: url('pattern_vertical.jpg'); background-size: 26px auto; background-repeat: repeat-y; z-index: 10;
-            mix-blend-mode: multiply;
-        }
-        .v-right {
-            position: absolute; top: 12px; bottom: 12px; right: 12px; width: 26px;
-            background-image: url('pattern_vertical.jpg'); background-size: 26px auto; background-repeat: repeat-y; z-index: 10;
-            mix-blend-mode: multiply;
-        }
-        /* ВЕРХНЯ ТА НИЖНЯ рамки — підкориговані до 35px, щоб прибрати мікро-нахлест хрестиків */
+        /* Смужки рамки повертаємо на повну довжину без дірок */
         .v-top {
-            position: absolute; top: 12px; left: 35px; right: 35px; height: 26px;
+            position: absolute; top: 12px; left: 12px; right: 12px; height: 26px;
             background-image: url('pattern.jpg'); background-size: auto 26px; background-repeat: repeat-x; z-index: 5;
             mix-blend-mode: multiply;
         }
         .v-bottom {
-            position: absolute; bottom: 12px; left: 35px; right: 35px; height: 26px;
+            position: absolute; bottom: 12px; left: 12px; right: 12px; height: 26px;
             background-image: url('pattern.jpg'); background-size: auto 26px; background-repeat: repeat-x; z-index: 5;
             mix-blend-mode: multiply;
+        }
+        .v-left {
+            position: absolute; top: 12px; bottom: 12px; left: 12px; width: 26px;
+            background-image: url('pattern_vertical.jpg'); background-size: 26px auto; background-repeat: repeat-y; z-index: 5;
+            mix-blend-mode: multiply;
+        }
+        .v-right {
+            position: absolute; top: 12px; bottom: 12px; right: 12px; width: 26px;
+            background-image: url('pattern_vertical.jpg'); background-size: 26px auto; background-repeat: repeat-y; z-index: 5;
+            mix-blend-mode: multiply;
+        }
+        
+        /* Створюємо акуратні маскуючі куточки під колір паперу поверх стиків */
+        .vyshyvanka-container::before {
+            content: ""; position: absolute; z-index: 20;
+            top: 12px; left: 12px; width: 26px; height: 26px;
+            background-color: #fdf8f0;
+            box-shadow: 
+                450px 0 0 #fdf8f0, /* Верхній правий */
+                0 657px 0 #fdf8f0, /* Нижній лівий */
+                450px 657px 0 #fdf8f0; /* Нижній правий */
         }
 
 
