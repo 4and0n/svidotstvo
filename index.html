@@ -11,14 +11,9 @@
     <style>
         body { margin: 0; padding: 0; background-color: #1a1a1a; font-family: 'Lora', Georgia, serif; }
         
-        /* Контейнер рамки */
         .vyshyvanka-container {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            box-sizing: border-box;
+            position: absolute; inset: 0; pointer-events: none; box-sizing: border-box;
         }
-        /* Смужки рамки з ефектом прозорості білого фону */
         .v-top {
             position: absolute; top: 12px; left: 12px; right: 12px; height: 26px;
             background-image: url('pattern.jpg'); background-size: auto 26px; background-repeat: repeat-x; z-index: 5;
@@ -40,21 +35,38 @@
             mix-blend-mode: multiply;
         }
         
-        /* Підключення вашого нового куточка у форматі .png від ШІ */
         .v-c-tl, .v-c-tr, .v-c-bl, .v-c-br {
             position: absolute; width: 45px; height: 45px; z-index: 20;
             background-image: url('corner.png'); background-size: 45px 45px; background-repeat: no-repeat;
-            mix-blend-mode: multiply; /* Гарантує ідеальне злиття фону з кремовим папером */
+            mix-blend-mode: multiply;
         }
-        
-        /* Позиціонування та правильний розворот куточка для кожного з 4 кутів */
         .v-c-tl { top: 12px; left: 12px; }
-        .v-c-tr { top: 12px; right: 12px; transform: scaleX(-1); } /* Дзеркально вправо */
-        .v-c-bl { bottom: 12px; left: 12px; transform: scaleY(-1); } /* Дзеркально вниз */
-        .v-c-br { bottom: 12px; right: 12px; transform: scale(-1); } /* Повний розворот */
+        .v-c-tr { top: 12px; right: 12px; transform: scaleX(-1); }
+        .v-c-bl { bottom: 12px; left: 12px; transform: scaleY(-1); }
+        .v-c-br { bottom: 12px; right: 12px; transform: scale(-1); }
+
+        @media print {
+            body { background: none !important; background-color: #fdf8f0 !important; }
+            .no-print { display: none !important; }
+            @page { size: 297mm 210mm; margin: 0; }
+            .a4-sheet {
+                width: 297mm !important; height: 210mm !important;
+                page-break-after: always !important; page-break-inside: avoid !important;
+                position: relative !important; display: block !important;
+                box-shadow: none !important; margin: 0 !important; padding: 0 !important;
+            }
+            .fold-crease { display: none !important; }
+            .print-visible { display: block !important; }
+        }
+
+        @media screen {
+            .a4-sheet { width: 297mm; height: 210mm; position: relative; background-color: #fdf8f0; box-shadow: 0 12px 48px rgba(0,0,0,0.7); overflow: hidden; }
+            .screen-hidden { display: none !important; }
+        }
+
+        .half-sheet { position: absolute; top: 0; bottom: 0; width: 50%; overflow: hidden; box-sizing: border-box; margin: 0; padding: 0; }
     </style>
 </head>
-
 <body class="text-gray-100 antialiased min-h-screen pb-12">
     <!-- ── ПАНЕЛЬ КЕРУВАННЯ ── -->
     <div class="no-print max-w-4xl mx-auto mt-6 p-5 bg-gray-900 rounded-xl border border-gray-800 shadow-2xl">
@@ -103,7 +115,7 @@
         <div id="sheetInner" class="a4-sheet screen-hidden print-visible">
             <div class="fold-crease" style="position:absolute; top:0; bottom:0; left:50%; width:1px; background:linear-gradient(to bottom,transparent,rgba(0,0,0,0.1) 40%,rgba(0,0,0,0.1) 60%,transparent); z-index:20; transform:translateX(-50%);"></div>
             
-            <!-- ЛІВА СТОРОНА — Фото 82% без перекривання меж -->
+            <!-- ЛІВА СТОРОНА — Фото 82% з ідеальним відступом -->
             <div class="half-sheet" style="left:0; display:flex; align-items:center; justify-content:center;">
                 <div class="vyshyvanka-container">
                     <div class="v-top"></div><div class="v-bottom"></div><div class="v-left"></div><div class="v-right"></div>
@@ -114,7 +126,7 @@
                 </div>
             </div>
             
-            <!-- ПРАВА СТОРОНА — Тексти свідоцтва великого солідного масштабу -->
+            <!-- ПРАВА СТОРОНА — Тексти великого масштабу -->
             <div class="half-sheet" style="left:50%; display:flex; align-items:center; justify-content:center;">
                 <div class="vyshyvanka-container">
                     <div class="v-top"></div><div class="v-bottom"></div><div class="v-left"></div><div class="v-right"></div>
