@@ -14,36 +14,28 @@
         .vyshyvanka-container {
             position: absolute; inset: 0; pointer-events: none; box-sizing: border-box;
         }
-        .v-top {
-            position: absolute; top: 12px; left: 12px; right: 12px; height: 26px;
-            background-image: url('pattern.jpg'); background-size: auto 26px; background-repeat: repeat-x; z-index: 5;
-            mix-blend-mode: multiply;
-        }
-        .v-bottom {
-            position: absolute; bottom: 12px; left: 12px; right: 12px; height: 26px;
-            background-image: url('pattern.jpg'); background-size: auto 26px; background-repeat: repeat-x; z-index: 5;
-            mix-blend-mode: multiply;
-        }
+        /* ВЕРТИКАЛЬНІ рамки робимо на всю висоту (від 12px до самого низу), вони утворюють кути */
         .v-left {
             position: absolute; top: 12px; bottom: 12px; left: 12px; width: 26px;
-            background-image: url('pattern_vertical.jpg'); background-size: 26px auto; background-repeat: repeat-y; z-index: 5;
+            background-image: url('pattern_vertical.jpg'); background-size: 26px auto; background-repeat: repeat-y; z-index: 10;
             mix-blend-mode: multiply;
         }
         .v-right {
             position: absolute; top: 12px; bottom: 12px; right: 12px; width: 26px;
-            background-image: url('pattern_vertical.jpg'); background-size: 26px auto; background-repeat: repeat-y; z-index: 5;
+            background-image: url('pattern_vertical.jpg'); background-size: 26px auto; background-repeat: repeat-y; z-index: 10;
             mix-blend-mode: multiply;
         }
-        
-        .v-c-tl, .v-c-tr, .v-c-bl, .v-c-br {
-            position: absolute; width: 26px; height: 26px; z-index: 50 !important;
-            background-image: url('corner.png'); background-size: 26px 26px; background-repeat: no-repeat;
+        /* ГОРИЗОНТАЛЬНІ рамки вкорочуємо на товщину бокових смужок (відступаємо по 38px зліва і справа), щоб вони не накладалися */
+        .v-top {
+            position: absolute; top: 12px; left: 38px; right: 38px; height: 26px;
+            background-image: url('pattern.jpg'); background-size: auto 26px; background-repeat: repeat-x; z-index: 5;
             mix-blend-mode: multiply;
         }
-        .v-c-tl { top: 12px; left: 12px; transform: none; }
-        .v-c-tr { top: 12px; right: 12px; transform: scaleX(-1); transform-origin: right center; }
-        .v-c-bl { bottom: 12px; left: 12px; transform: scaleY(-1); transform-origin: center bottom; }
-        .v-c-br { bottom: 12px; right: 12px; transform: scale(-1); transform-origin: right bottom; }
+        .v-bottom {
+            position: absolute; bottom: 12px; left: 38px; right: 38px; height: 26px;
+            background-image: url('pattern.jpg'); background-size: auto 26px; background-repeat: repeat-x; z-index: 5;
+            mix-blend-mode: multiply;
+        }
 
         @media print {
             body { background: none !important; background-color: #fdf8f0 !important; }
@@ -70,7 +62,7 @@
 <body class="text-gray-100 antialiased min-h-screen pb-12">
     <!-- ── ПАНЕЛЬ КЕРУВАННЯ ── -->
     <div class="no-print max-w-4xl mx-auto mt-6 p-5 bg-gray-900 rounded-xl border border-gray-800 shadow-2xl">
-        <h2 class="text-lg font-bold mb-4 text-amber-400 font-sans tracking-wide text-center">Генератор Свідоцтв «ВЕСЕЛКА» (Фінальна Стабільна Версія V2)</h2>
+        <h2 class="text-lg font-bold mb-4 text-amber-400 font-sans tracking-wide text-center">Генератор Свідоцтв «ВЕСЕЛКА» (Стикування встик)</h2>
         <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
             <div class="w-full md:w-1/2">
                 <label class="block text-xs font-medium text-gray-400 mb-1">Введіть ПІБ отримувача:</label>
@@ -95,7 +87,6 @@
                 
                 <div class="vyshyvanka-container">
                     <div class="v-top"></div><div class="v-bottom"></div><div class="v-left"></div><div class="v-right"></div>
-                    <div class="v-c-tl"></div><div class="v-c-tr"></div><div class="v-c-bl"></div><div class="v-c-br"></div>
                 </div>
                 
                 <div style="position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:20px; padding:0 12%; width:100%; text-align:center;">
@@ -115,22 +106,20 @@
         <div id="sheetInner" class="a4-sheet screen-hidden print-visible">
             <div class="fold-crease" style="position:absolute; top:0; bottom:0; left:50%; width:1px; background:linear-gradient(to bottom,transparent,rgba(0,0,0,0.1) 40%,rgba(0,0,0,0.1) 60%,transparent); z-index:20; transform:translateX(-50%);"></div>
             
-            <!-- ЛІВА СТОРОНА — Фото з правильними куточками -->
+            <!-- ЛІВА СТОРОНА — Фото з новими рамками встик -->
             <div class="half-sheet" style="left:0; display:flex; align-items:center; justify-content:center;">
                 <div class="vyshyvanka-container">
                     <div class="v-top"></div><div class="v-bottom"></div><div class="v-left"></div><div class="v-right"></div>
-                    <div class="v-c-tl"></div><div class="v-c-tr"></div><div class="v-c-bl"></div><div class="v-c-br"></div>
                 </div>
                 <div style="position:relative; z-index:2; width:82%; height:82%; box-sizing:border-box; padding:6px; border:2px solid #C8A84B; background-color:#fff;">
                     <img src="dance.png" alt="Ансамбль Веселка" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;">
                 </div>
             </div>
             
-            <!-- ПРАВА СТОРОНА — Тексти свідоцтва великого солідного масштабу -->
+            <!-- ПРАВА СТОРОНА — Тексти великого масштабу з новими рамками встик -->
             <div class="half-sheet" style="left:50%; display:flex; align-items:center; justify-content:center;">
                 <div class="vyshyvanka-container">
                     <div class="v-top"></div><div class="v-bottom"></div><div class="v-left"></div><div class="v-right"></div>
-                    <div class="v-c-tl"></div><div class="v-c-tr"></div><div class="v-c-bl"></div><div class="v-c-br"></div>
                 </div>
                 
                 <div style="position:relative; z-index:2; width:82%; height:82%; display:flex; flex-direction:column; align-items:center; justify-content:space-between; text-align:center; padding: 15px 0;">
