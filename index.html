@@ -11,6 +11,17 @@
     <style>
         body { margin: 0; padding: 0; background-color: #1a1a1a; font-family: 'Lora', Georgia, serif; }
         
+        /* CSS-магія: підключаємо ваш файл pattern.jpg. 
+           Параметр 60 вказує браузеру правильну товщину зрізу для цієї пишної вишивки */
+        .real-vyshyvanka-border {
+            border: 28px solid transparent;
+            border-image: url('pattern.jpg') 60 round;
+            box-sizing: border-box;
+            position: absolute;
+            inset: 10px;
+            pointer-events: none;
+        }
+
         @media print {
             body { background: none !important; background-color: #fdf8f0 !important; }
             .no-print { display: none !important; }
@@ -36,7 +47,7 @@
 <body class="text-gray-100 antialiased min-h-screen pb-12">
     <!-- ── ПАНЕЛЬ КЕРУВАННЯ ── -->
     <div class="no-print max-w-4xl mx-auto mt-6 p-5 bg-gray-900 rounded-xl border border-gray-800 shadow-2xl">
-        <h2 class="text-lg font-bold mb-4 text-amber-400 font-sans tracking-wide text-center">Оновлена Панель Свідоцтв «ВЕСЕЛКА» (Традиційна Вишиванка)</h2>
+        <h2 class="text-lg font-bold mb-4 text-amber-400 font-sans tracking-wide text-center">Оновлена Панель Свідоцтв «ВЕСЕЛКА» (Справжня Вишивка)</h2>
         <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
             <div class="w-full md:w-1/2">
                 <label class="block text-xs font-medium text-gray-400 mb-1">Введіть ПІБ отримувача:</label>
@@ -59,8 +70,8 @@
             <div class="half-sheet" style="left:0; background-color:#fdf8f0;"></div>
             <div class="half-sheet" style="left:50%; display:flex; align-items:center; justify-content:center;">
                 
-                <!-- Суцільний традиційний орнамент вишивки -->
-                <div style="position:absolute; inset:0;" class="vyshyvanka-frame"></div>
+                <!-- Рамка з вашою новою вишиванкою -->
+                <div class="real-vyshyvanka-border"></div>
                 
                 <div style="position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:20px; padding:0 12%; width:100%; text-align:center;">
                     <p style="font-size:13px; color:#1a2a4a; font-weight:700; tracking:0.12em; text-transform:uppercase; margin:0; font-family:'Lora',serif;">
@@ -79,17 +90,17 @@
         <div id="sheetInner" class="a4-sheet screen-hidden print-visible">
             <div class="fold-crease" style="position:absolute; top:0; bottom:0; left:50%; width:1px; background:linear-gradient(to bottom,transparent,rgba(0,0,0,0.1) 40%,rgba(0,0,0,0.1) 60%,transparent); z-index:20; transform:translateX(-50%);"></div>
             
-            <!-- ЛІВА СТОРОНА — Фото повернуто у безпечні межі (84%) -->
+            <!-- ЛІВА СТОРОНА — Фото 84% (dance.png) -->
             <div class="half-sheet" style="left:0; display:flex; align-items:center; justify-content:center;">
-                <div style="position:absolute; inset:0;" class="vyshyvanka-frame"></div>
-                <div style="position:relative; z-index:2; width:84%; height:84%; box-sizing:border-box; padding:6px; border:2px solid #C8A84B; background-color:#fff; shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                <div class="real-vyshyvanka-border"></div>
+                <div style="position:relative; z-index:2; width:84%; height:84%; box-sizing:border-box; padding:6px; border:2px solid #C8A84B; background-color:#fff;">
                     <img src="dance.png" alt="Ансамбль Веселка" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;">
                 </div>
             </div>
             
-            <!-- ПРАВА СТОРОНА — Тексти та підписи -->
+            <!-- ПРАВА СТОРОНА — Тексти свідоцтва -->
             <div class="half-sheet" style="left:50%; display:flex; align-items:center; justify-content:center;">
-                <div style="position:absolute; inset:0;" class="vyshyvanka-frame"></div>
+                <div class="real-vyshyvanka-border"></div>
                 
                 <div style="position:relative; z-index:2; width:84%; height:86%; display:flex; flex-direction:column; align-items:center; justify-content:space-between; text-align:center; padding: 10px 0;">
                     
@@ -138,63 +149,6 @@
     </div>
 
     <script>
-        /* Новий скрипт генерації суцільного традиційного візерунка української геометрії хрестиком */
-        function drawSolidVyshyvanka() {
-            let topBorder = '';
-            let bottomBorder = '';
-            let leftBorder = '';
-            let rightBorder = '';
-            
-            // Малюємо суцільну безперервну стрічку вишивки зверху та знизу (крок всього 8 пікселів для щільності)
-            for (let x = 16; x <= 484; x += 8) {
-                // Чергування автентичних червоних та чорних ниток-хрестиків
-                let color1 = (x % 16 === 0) ? '#e63946' : '#111111';
-                let color2 = (x % 16 === 0) ? '#111111' : '#e63946';
-                
-                topBorder += `
-                    <rect x="${x}" y="18" width="4" height="4" fill="${color1}"/>
-                    <rect x="${x+4}" y="22" width="4" height="4" fill="${color2}"/>
-                    <rect x="${x}" y="26" width="4" height="4" fill="${color1}"/>
-                `;
-                bottomBorder += `
-                    <rect x="${x}" y="677" width="4" height="4" fill="${color1}"/>
-                    <rect x="${x+4}" y="681" width="4" height="4" fill="${color2}"/>
-                    <rect x="${x}" y="685" width="4" height="4" fill="${color1}"/>
-                `;
-            }
-
-            // Малюємо суцільну безперервну стрічку вишивки по боках бланка
-            for (let y = 16; y <= 691; y += 8) {
-                let color1 = (y % 16 === 0) ? '#e63946' : '#111111';
-                let color2 = (y % 16 === 0) ? '#111111' : '#e63946';
-                
-                leftBorder += `
-                    <rect x="18" y="${y}" width="4" height="4" fill="${color1}"/>
-                    <rect x="22" y="${y+4}" width="4" height="4" fill="${color2}"/>
-                    <rect x="26" y="${y}" width="4" height="4" fill="${color1}"/>
-                `;
-                rightBorder += `
-                    <rect x="470" y="${y}" width="4" height="4" fill="${color1}"/>
-                    <rect x="474" y="${y+4}" width="4" height="4" fill="${color2}"/>
-                    <rect x="478" y="${y}" width="4" height="4" fill="${color1}"/>
-                `;
-            }
-
-            return `<svg viewBox="0 0 500 707" xmlns="http://w3.org" preserveAspectRatio="none" style="width:100%; height:100%; display:block; position:absolute; inset:0; pointer-events:none;">
-                <!-- Тонкі обмежувальні лінії для солідності -->
-                <rect x="12" y="12" width="476" height="683" fill="none" stroke="#1a2a4a" stroke-width="1.5"/>
-                <rect x="34" y="34" width="432" height="639" fill="none" stroke="#C8A84B" stroke-width="1"/>
-                
-                <!-- Рендеринг суцільних вишитих стрічок -->
-                <g>${topBorder}</g>
-                <g>${bottomBorder}</g>
-                <g>${leftBorder}</g>
-                <g>${rightBorder}</g>
-            </svg>`;
-        }
-
-        document.querySelectorAll('.vyshyvanka-frame').forEach(el => el.innerHTML = drawSolidVyshyvanka());
-
         function switchTab(tab) {
             const sheetOuter = document.getElementById('sheetOuter'); const sheetInner = document.getElementById('sheetInner');
             const btnOuter = document.getElementById('btnOuter'); const btnInner = document.getElementById('btnInner');
