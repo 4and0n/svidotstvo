@@ -11,29 +11,30 @@
     <style>
         body { margin: 0; padding: 0; background-color: #1a1a1a; font-family: 'Lora', Georgia, serif; }
         
-        /* Нова надійна технологія: чотири окремі лінії вишиванки чітко по краях */
+        /* Контейнер рамки */
         .vyshyvanka-container {
             position: absolute;
             inset: 0;
             pointer-events: none;
             box-sizing: border-box;
-            border: 1px solid #1a2a4a; /* Тонка синя обводка самого краю */
         }
+        /* Верх і низ використовують оригінальний горизонтальний файл (товщина 26px) */
         .v-top {
-            position: absolute; top: 12px; left: 12px; right: 12px; height: 16px;
-            background-image: url('pattern.jpg'); background-size: auto 16px; background-repeat: repeat-x;
+            position: absolute; top: 12px; left: 12px; right: 12px; height: 26px;
+            background-image: url('pattern.jpg'); background-size: auto 26px; background-repeat: repeat-x; z-index: 10;
         }
         .v-bottom {
-            position: absolute; bottom: 12px; left: 12px; right: 12px; height: 16px;
-            background-image: url('pattern.jpg'); background-size: auto 16px; background-repeat: repeat-x;
+            position: absolute; bottom: 12px; left: 12px; right: 12px; height: 26px;
+            background-image: url('pattern.jpg'); background-size: auto 26px; background-repeat: repeat-x; z-index: 10;
         }
+        /* Боки використовують новий вертикальний повернутий файл pattern_vertical.jpg (ширина 26px) */
         .v-left {
-            position: absolute; top: 12px; bottom: 12px; left: 12px; width: 16px;
-            background-image: url('pattern.jpg'); background-size: 16px auto; background-repeat: repeat-y;
+            position: absolute; top: 12px; bottom: 12px; left: 12px; width: 26px;
+            background-image: url('pattern_vertical.jpg'); background-size: 26px auto; background-repeat: repeat-y; z-index: 5;
         }
         .v-right {
-            position: absolute; top: 12px; bottom: 12px; right: 12px; width: 16px;
-            background-image: url('pattern.jpg'); background-size: 16px auto; background-repeat: repeat-y;
+            position: absolute; top: 12px; bottom: 12px; right: 12px; width: 26px;
+            background-image: url('pattern_vertical.jpg'); background-size: 26px auto; background-repeat: repeat-y; z-index: 5;
         }
 
         @media print {
@@ -61,7 +62,7 @@
 <body class="text-gray-100 antialiased min-h-screen pb-12">
     <!-- ── ПАНЕЛЬ КЕРУВАННЯ ── -->
     <div class="no-print max-w-4xl mx-auto mt-6 p-5 bg-gray-900 rounded-xl border border-gray-800 shadow-2xl">
-        <h2 class="text-lg font-bold mb-4 text-amber-400 font-sans tracking-wide text-center">Генератор Свідоцтв «ВЕСЕЛКА» (Стабільна Вишивка)</h2>
+        <h2 class="text-lg font-bold mb-4 text-amber-400 font-sans tracking-wide text-center">Генератор Свідоцтв «ВЕСЕЛКА» (Стабільна Вишивка V2)</h2>
         <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
             <div class="w-full md:w-1/2">
                 <label class="block text-xs font-medium text-gray-400 mb-1">Введіть ПІБ отримувача:</label>
@@ -84,7 +85,7 @@
             <div class="half-sheet" style="left:0; background-color:#fdf8f0;"></div>
             <div class="half-sheet" style="left:50%; display:flex; align-items:center; justify-content:center;">
                 
-                <!-- Стабільні лінії вишивки по периметру -->
+                <!-- Рамки широкого комбінованого типу -->
                 <div class="vyshyvanka-container">
                     <div class="v-top"></div><div class="v-bottom"></div><div class="v-left"></div><div class="v-right"></div>
                 </div>
@@ -106,7 +107,7 @@
         <div id="sheetInner" class="a4-sheet screen-hidden print-visible">
             <div class="fold-crease" style="position:absolute; top:0; bottom:0; left:50%; width:1px; background:linear-gradient(to bottom,transparent,rgba(0,0,0,0.1) 40%,rgba(0,0,0,0.1) 60%,transparent); z-index:20; transform:translateX(-50%);"></div>
             
-            <!-- ЛІВА СТОРОНА — Фото з запасом місця (82%), щоб рамка його не торкалася -->
+            <!-- ЛІВА СТОРОНА — Фото танцюристів (dance.png) -->
             <div class="half-sheet" style="left:0; display:flex; align-items:center; justify-content:center;">
                 <div class="vyshyvanka-container">
                     <div class="v-top"></div><div class="v-bottom"></div><div class="v-left"></div><div class="v-right"></div>
@@ -116,7 +117,7 @@
                 </div>
             </div>
             
-            <!-- ПРАВА СТОРОНА — Збільшені солідні написи -->
+            <!-- ПРАВА СТОРОНА — Тексти свідоцтва -->
             <div class="half-sheet" style="left:50%; display:flex; align-items:center; justify-content:center;">
                 <div class="vyshyvanka-container">
                     <div class="v-top"></div><div class="v-bottom"></div><div class="v-left"></div><div class="v-right"></div>
@@ -139,7 +140,7 @@
                         </h2>
                         <p style="font-size:13.5px; color:#1a2a4a; line-height:1.6; margin:0; font-family:'Lora',serif; font-style:italic; font-weight:500;">
                             про проходження повного курсу навчання<br/>
-                            у Зразковому художньому колективі України<br/>
+                            у Зразковому художньому колекві України<br/>
                             ансамблі танцю
                         </p>
                         <p style="font-family:'Great Vibes',cursive; font-size:38px; color:#C8A84B; margin:5px 0; line-height:1.0;">
