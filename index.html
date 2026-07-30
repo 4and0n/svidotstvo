@@ -11,30 +11,50 @@
     <style>
         body { margin: 0; padding: 0; background-color: #1a1a1a; font-family: 'Lora', Georgia, serif; }
         
-        /* Контейнер рамки */
+                /* Контейнер рамки */
         .vyshyvanka-container {
             position: absolute;
             inset: 0;
             pointer-events: none;
             box-sizing: border-box;
         }
-        /* Верх і низ використовують оригінальний горизонтальний файл (товщина 26px) */
+        /* Смужки рамки з магічним ефектом прозорості білого фону */
         .v-top {
             position: absolute; top: 12px; left: 12px; right: 12px; height: 26px;
-            background-image: url('pattern.jpg'); background-size: auto 26px; background-repeat: repeat-x; z-index: 10;
+            background-image: url('pattern.jpg'); background-size: auto 26px; background-repeat: repeat-x; z-index: 5;
+            mix-blend-mode: multiply;
         }
         .v-bottom {
             position: absolute; bottom: 12px; left: 12px; right: 12px; height: 26px;
-            background-image: url('pattern.jpg'); background-size: auto 26px; background-repeat: repeat-x; z-index: 10;
+            background-image: url('pattern.jpg'); background-size: auto 26px; background-repeat: repeat-x; z-index: 5;
+            mix-blend-mode: multiply;
         }
-        /* Боки використовують новий вертикальний повернутий файл pattern_vertical.jpg (ширина 26px) */
         .v-left {
             position: absolute; top: 12px; bottom: 12px; left: 12px; width: 26px;
             background-image: url('pattern_vertical.jpg'); background-size: 26px auto; background-repeat: repeat-y; z-index: 5;
+            mix-blend-mode: multiply;
         }
         .v-right {
             position: absolute; top: 12px; bottom: 12px; right: 12px; width: 26px;
             background-image: url('pattern_vertical.jpg'); background-size: 26px auto; background-repeat: repeat-y; z-index: 5;
+            mix-blend-mode: multiply;
+        }
+        
+        /* Декоративні заглушки під колір паперу свідоцтва, які маскують стики */
+        .vyshyvanka-container::before, .vyshyvanka-container::after {
+            content: ""; position: absolute; width: 26px; height: 26px; background-color: #fdf8f0; z-index: 20;
+        }
+        /* Верхні кути з вишитим ромбом */
+        .vyshyvanka-container::before { 
+            top: 12px; left: 12px; box-shadow: 448px 0 0 #fdf8f0; 
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://w3.org" viewBox="0 0 20 20"><polygon points="10,2 18,10 10,18 2,10" fill="%23e63946"/><rect x="8" y="8" width="4" height="4" fill="%23111111"/></svg>'); 
+            background-size: 18px 18px; background-repeat: no-repeat; background-position: center; 
+        }
+        /* Нижні кути з вишитим ромбом */
+        .vyshyvanka-container::after { 
+            bottom: 12px; left: 12px; box-shadow: 448px 0 0 #fdf8f0; 
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://w3.org" viewBox="0 0 20 20"><polygon points="10,2 18,10 10,18 2,10" fill="%23e63946"/><rect x="8" y="8" width="4" height="4" fill="%23111111"/></svg>'); 
+            background-size: 18px 18px; background-repeat: no-repeat; background-position: center; 
         }
 
         @media print {
