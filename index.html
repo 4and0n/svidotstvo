@@ -11,7 +11,7 @@
     <style>
         body { margin: 0; padding: 0; background-color: #1a1a1a; font-family: 'Lora', Georgia, serif; }
         
-                /* Контейнер рамки */
+        /* Контейнер рамки */
         .vyshyvanka-container {
             position: absolute;
             inset: 0;
@@ -40,45 +40,20 @@
             mix-blend-mode: multiply;
         }
         
-        /* Декоративні заглушки під колір паперу свідоцтва, які маскують стики */
-        .vyshyvanka-container::before, .vyshyvanka-container::after {
-            content: ""; position: absolute; width: 26px; height: 26px; background-color: #fdf8f0; z-index: 20;
-        }
-        /* Верхні кути з вишитим ромбом */
-        .vyshyvanka-container::before { 
-            top: 12px; left: 12px; box-shadow: 448px 0 0 #fdf8f0; 
+        /* Загальний стиль для чотирьох кутових заглушок під колір паперу */
+        .v-c-tl, .v-c-tr, .v-c-bl, .v-c-br {
+            position: absolute; width: 26px; height: 26px; background-color: #fdf8f0; z-index: 20;
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://w3.org" viewBox="0 0 20 20"><polygon points="10,2 18,10 10,18 2,10" fill="%23e63946"/><rect x="8" y="8" width="4" height="4" fill="%23111111"/></svg>'); 
-            background-size: 18px 18px; background-repeat: no-repeat; background-position: center; 
+            background-size: 18px 18px; background-repeat: no-repeat; background-position: center;
         }
-        /* Нижні кути з вишитим ромбом */
-        .vyshyvanka-container::after { 
-            bottom: 12px; left: 12px; box-shadow: 448px 0 0 #fdf8f0; 
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://w3.org" viewBox="0 0 20 20"><polygon points="10,2 18,10 10,18 2,10" fill="%23e63946"/><rect x="8" y="8" width="4" height="4" fill="%23111111"/></svg>'); 
-            background-size: 18px 18px; background-repeat: no-repeat; background-position: center; 
-        }
-
-        @media print {
-            body { background: none !important; background-color: #fdf8f0 !important; }
-            .no-print { display: none !important; }
-            @page { size: 297mm 210mm; margin: 0; }
-            .a4-sheet {
-                width: 297mm !important; height: 210mm !important;
-                page-break-after: always !important; page-break-inside: avoid !important;
-                position: relative !important; display: block !important;
-                box-shadow: none !important; margin: 0 !important; padding: 0 !important;
-            }
-            .fold-crease { display: none !important; }
-            .print-visible { display: block !important; }
-        }
-
-        @media screen {
-            .a4-sheet { width: 297mm; height: 210mm; position: relative; background-color: #fdf8f0; box-shadow: 0 12px 48px rgba(0,0,0,0.7); overflow: hidden; }
-            .screen-hidden { display: none !important; }
-        }
-
-        .half-sheet { position: absolute; top: 0; bottom: 0; width: 50%; overflow: hidden; box-sizing: border-box; margin: 0; padding: 0; }
+        /* Точне позиціонування кожного куточка в межах своєї сторінки */
+        .v-c-tl { top: 12px; left: 12px; }
+        .v-c-tr { top: 12px; right: 12px; }
+        .v-c-bl { bottom: 12px; left: 12px; }
+        .v-c-br { bottom: 12px; right: 12px; }
     </style>
 </head>
+
 <body class="text-gray-100 antialiased min-h-screen pb-12">
     <!-- ── ПАНЕЛЬ КЕРУВАННЯ ── -->
     <div class="no-print max-w-4xl mx-auto mt-6 p-5 bg-gray-900 rounded-xl border border-gray-800 shadow-2xl">
